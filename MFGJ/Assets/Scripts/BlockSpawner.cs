@@ -9,9 +9,11 @@ public class BlockSpawner : MonoBehaviour
     public float gravity = 1f;
     public GameObject spawnableObject;
     public int blockCounter = 0;
+    public float currentTime;
+    public bool gotMoved;
 
     private SpawnerController spawnerController;
-    public float currentTime;
+
     void Start()
     {
         currentTime = spawnInterval;
@@ -22,12 +24,13 @@ public class BlockSpawner : MonoBehaviour
     void Update()
     {
         currentTime -= Time.deltaTime;
-        if (currentTime < 0)
+        if (currentTime < 0 && gotMoved)
         {
             GameObject block = Instantiate(spawnableObject, transform.position, Quaternion.identity);
             block.GetComponent<Rigidbody2D>().gravityScale = gravity;
 
             spawnerController.blockCounter++;
+            spawnerController.canSpawnNew = true;
 
             if (gravity < 3f)
             {
@@ -39,6 +42,7 @@ public class BlockSpawner : MonoBehaviour
                 spawnInterval -= 0.1f;
             }
             currentTime = spawnInterval;
+            gotMoved = false;
             
         }
     }

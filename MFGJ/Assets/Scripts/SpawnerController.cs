@@ -11,6 +11,8 @@ public class SpawnerController : MonoBehaviour
     public float spawnInterval;
     public float generalGravity;
 
+    public bool canSpawnNew = false;
+
     public float minRange = -8, maxRange = 8;
 
     float lastSpawnerPosition;
@@ -29,17 +31,25 @@ public class SpawnerController : MonoBehaviour
     {
         foreach(GameObject spawner in spawners)
         {
-            float newX = Random.Range(minRange, maxRange);
-            while (checkIfTooCloseToLast(newX))
+            BlockSpawner spawnerBlockSpawnerComp = spawner.GetComponent<BlockSpawner>();
+            if (!spawnerBlockSpawnerComp.gotMoved)
             {
-                newX = Random.Range(minRange, maxRange);
+                float newX = Random.Range(minRange, maxRange);
+                while (CheckIfTooCloseToLast(newX))
+                {
+                    newX = Random.Range(minRange, maxRange);
+                }
+                Debug.Log(newX);
+                Debug.Log("LastX" + (lastX));
+                MoveToPosition(spawner, newX);
+                spawnerBlockSpawnerComp.gotMoved = true;
+                lastX = newX;
             }
-            moveToPosition(spawner, newX);
-            lastX = newX;
         }
-        if ((blockCounter == 10 || blockCounter == 20) && spawners.Count < maxSpawns)
+        if ((blockCounter%10 == 0) && spawners.Count < maxSpawns && canSpawnNew)
         {
             GameObject tempSpawner = Instantiate(blockSpawner, transform.position, Quaternion.identity, this.transform);
+            canSpawnNew = false;
             spawners.Add(tempSpawner);
             tempSpawner.GetComponent<BlockSpawner>().gravity = generalGravity;
             tempSpawner.GetComponent<BlockSpawner>().spawnInterval = spawnInterval;
@@ -50,12 +60,12 @@ public class SpawnerController : MonoBehaviour
         }
     }
 
-    bool checkIfTooCloseToLast(float x)
+    bool CheckIfTooCloseToLast(float x)
     {
         return Mathf.Abs(x - lastX) < 5f;
     }
 
-    void moveToPosition(GameObject spawner, float newX) 
+    void MoveToPosition(GameObject spawner, float newX) 
     {
         spawner.transform.position = new Vector2(newX, transform.position.y);
     }
