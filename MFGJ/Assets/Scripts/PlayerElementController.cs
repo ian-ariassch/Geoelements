@@ -5,9 +5,10 @@ using UnityEngine;
 public class PlayerElementController : MonoBehaviour
 {
     public float elementSwitchInterval = 5f;
-    public GameObject airBall;
+    public GameObject airBall, waterBall;
+    public int healthPoints, maxHealthPoints;
 
-
+    int earthShield = 2;
     float currentTime;
     string[] elements = new string[3] { "Water", "Air", "Earth" };
     string currentElement;
@@ -27,7 +28,7 @@ public class PlayerElementController : MonoBehaviour
         currentTime -= Time.deltaTime;
         if(currentTime < 0) 
         {
-            currentElement = pickRandomElement();
+            currentElement = PickRandomElement();
             switch (currentElement)
             {
                 case "Water":
@@ -38,6 +39,7 @@ public class PlayerElementController : MonoBehaviour
                     break;
                 case "Earth":
                     playerSprite.color = Color.green;
+                    earthShield = 2;
                     break;
             }
 
@@ -53,16 +55,56 @@ public class PlayerElementController : MonoBehaviour
                     Rigidbody2D airballRb = spawnedAirBall.GetComponent<Rigidbody2D>();
                     airballRb.mass = 100000;
                     airballRb.gravityScale = 0;
-                    airballRb.AddForce(transform.up * 100000000);
+                    airballRb.AddForce(transform.up * airballRb.mass * 1000);
                     break;
-
+                case "Water":
+                    GameObject spawnedWaterBall = Instantiate(waterBall, transform.position, Quaternion.identity);
+                    Rigidbody2D waterBallRb = spawnedWaterBall.GetComponent<Rigidbody2D>();
+                    waterBallRb.AddForce(transform.up * waterBallRb.mass * 1000);
+                    break;
             }
+        }
+
+        if(healthPoints <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 
-    string pickRandomElement() 
+    string PickRandomElement() 
     {
         int randomIndex = Random.Range(0, 3);
         return elements[randomIndex];
+    }
+
+    public void TakeDamage()
+    {
+        if(currentElement == "Earth")
+        {
+            if(earthShield == 1)
+            {
+                playerSprite.color = Color.yellow;
+                earthShield--;
+            }
+            else if(earthShield == 2)
+            {
+                playerSprite.color = Color.red;
+                earthShield--;
+            }
+            else
+            {
+                healthPoints--;
+            }
+        }
+        else
+        {
+            healthPoints--;
+        }
+    }
+
+    public void Heal()
+    {
+        if(healthPoints < maxHealthPoints)
+        healthPoints++;
     }
 }
