@@ -131,12 +131,12 @@ TextureImporter:
       name: blocks_orbs_assets_0
       rect:
         serializedVersion: 2
-        x: 143
-        y: 1114
-        width: 234
-        height: 231
+        x: 111
+        y: 1084
+        width: 298
+        height: 298
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -152,12 +152,12 @@ TextureImporter:
       name: blocks_orbs_assets_1
       rect:
         serializedVersion: 2
-        x: 819
-        y: 1105
-        width: 237
-        height: 240
+        x: 791
+        y: 1083
+        width: 298
+        height: 298
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -173,12 +173,12 @@ TextureImporter:
       name: blocks_orbs_assets_2
       rect:
         serializedVersion: 2
-        x: 1469
-        y: 1107
-        width: 234
-        height: 241
+        x: 1441
+        y: 1081
+        width: 298
+        height: 298
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -194,12 +194,12 @@ TextureImporter:
       name: blocks_orbs_assets_3
       rect:
         serializedVersion: 2
-        x: 396
-        y: 622
-        width: 276
-        height: 273
+        x: 386
+        y: 612
+        width: 298
+        height: 298
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -215,12 +215,12 @@ TextureImporter:
       name: blocks_orbs_assets_4
       rect:
         serializedVersion: 2
-        x: 1148
-        y: 603
-        width: 268
-        height: 262
+        x: 1136
+        y: 588
+        width: 298
+        height: 298
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -236,10 +236,10 @@ TextureImporter:
       name: blocks_orbs_assets_5
       rect:
         serializedVersion: 2
-        x: 150
+        x: 104
         y: 134
-        width: 620
-        height: 214
+        width: 686
+        height: 281
       alignment: 9
       pivot: {x: 0.52529675, y: 0.4573281}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,40 +257,19 @@ TextureImporter:
       name: blocks_orbs_assets_6
       rect:
         serializedVersion: 2
-        x: 1072
-        y: 142
-        width: 618
-        height: 223
+        x: 1022
+        y: 145
+        width: 704
+        height: 262
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 2, y: 5, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: 0d63b477dc296344793d2f1038c0196a
       internalID: -1955090859
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: blocks_orbs_assets_7
-      rect:
-        serializedVersion: 2
-        x: 791
-        y: 44
-        width: 20
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b08156fb38a9c4146a1e3d299ae2244a
-      internalID: 637137883
       vertices: []
       indices: 
       edges: []
@@ -306,14 +285,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      blocks_orbs_assets_3: -921642262
+      blocks_orbs_assets_3: -917100226
       blocks_orbs_assets_1: -1351350401
       blocks_orbs_assets_2: -1420827839
-      blocks_orbs_assets_5: -2081360551
-      blocks_orbs_assets_7: 637137883
-      blocks_orbs_assets_6: -1955090859
-      blocks_orbs_assets_0: -917100226
-      blocks_orbs_assets_4: 1017011186
+      blocks_orbs_assets_5: -921642262
+      blocks_orbs_assets_7: 1017011186
+      blocks_orbs_assets_6: -2081360551
+      blocks_orbs_assets_0: -1955090859
+      blocks_orbs_assets_4: 637137883
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

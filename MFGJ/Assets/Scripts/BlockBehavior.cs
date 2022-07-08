@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class BlockBehavior : MonoBehaviour
 {
+    public List<Sprite> sprites;
+
     BoxCollider2D blockCollider;
     bool healing = false;
     // Start is called before the first frame update
     void Start()
     {
+        GetComponent<SpriteRenderer>().sprite = sprites[Random.Range(0, sprites.Count)];
         blockCollider = GetComponent<BoxCollider2D>();
     }
 

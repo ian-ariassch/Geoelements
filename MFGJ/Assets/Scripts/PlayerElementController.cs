@@ -7,17 +7,20 @@ public class PlayerElementController : MonoBehaviour
     public float elementSwitchInterval = 5f;
     public GameObject airBall, waterBall;
     public int healthPoints, maxHealthPoints;
+    public List<AnimationClip> animations;
 
     int earthShield = 2;
     float currentTime;
     string[] elements = new string[3] { "Water", "Air", "Earth" };
     string currentElement;
 
+    Animator anim;
     SpriteRenderer playerSprite;
 
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         playerSprite = GetComponent<SpriteRenderer>();
         currentTime = 0;
     }
@@ -32,13 +35,13 @@ public class PlayerElementController : MonoBehaviour
             switch (currentElement)
             {
                 case "Water":
-                    playerSprite.color = Color.cyan;
+                    anim.Play("waterIdle");
                     break;
                 case "Air":
-                    playerSprite.color = Color.gray;
+                    anim.Play("windAnimation");
                     break;
                 case "Earth":
-                    playerSprite.color = Color.green;
+                    anim.Play("earthFull");
                     earthShield = 2;
                     break;
             }
@@ -56,6 +59,7 @@ public class PlayerElementController : MonoBehaviour
                     airballRb.mass = 100000;
                     airballRb.gravityScale = 0;
                     airballRb.AddForce(transform.up * airballRb.mass * 1000);
+                    anim.Play("windIdle");
                     break;
                 case "Water":
                     GameObject spawnedWaterBall = Instantiate(waterBall, transform.position, Quaternion.identity);
@@ -83,12 +87,12 @@ public class PlayerElementController : MonoBehaviour
         {
             if(earthShield == 1)
             {
-                playerSprite.color = Color.yellow;
+                anim.Play("earthIdle");
                 earthShield--;
             }
             else if(earthShield == 2)
             {
-                playerSprite.color = Color.red;
+                anim.Play("earthBroken");
                 earthShield--;
             }
             else
