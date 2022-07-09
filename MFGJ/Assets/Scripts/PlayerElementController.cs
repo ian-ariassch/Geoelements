@@ -8,6 +8,11 @@ public class PlayerElementController : MonoBehaviour
     public GameObject airBall, waterBall;
     public int healthPoints, maxHealthPoints;
     public List<AnimationClip> animations;
+    public float airCooldown = 5f;
+    float airCooldownTimer;
+
+    public float waterCooldown = 5f;
+    float waterCooldownTimer;
 
     int earthShield = 2;
     float currentTime;
@@ -29,16 +34,19 @@ public class PlayerElementController : MonoBehaviour
     void Update()
     {
         currentTime -= Time.deltaTime;
+        airCooldownTimer -= Time.deltaTime;
         if(currentTime < 0) 
         {
             currentElement = PickRandomElement();
             switch (currentElement)
             {
                 case "Water":
-                    anim.Play("waterIdle");
+                    anim.Play("waterAnimation");
+                    waterCooldownTimer = 0;
                     break;
                 case "Air":
                     anim.Play("windAnimation");
+                    airCooldownTimer = 0;
                     break;
                 case "Earth":
                     anim.Play("earthFull");
@@ -54,17 +62,26 @@ public class PlayerElementController : MonoBehaviour
             switch (currentElement) 
             {
                 case "Air":
-                    GameObject spawnedAirBall = Instantiate(airBall, transform.position, Quaternion.identity);
-                    Rigidbody2D airballRb = spawnedAirBall.GetComponent<Rigidbody2D>();
-                    airballRb.mass = 100000;
-                    airballRb.gravityScale = 0;
-                    airballRb.AddForce(transform.up * airballRb.mass * 1000);
-                    anim.Play("windIdle");
+                    if(airCooldownTimer < 0)
+                    {
+                        GameObject spawnedAirBall = Instantiate(airBall, transform.position, Quaternion.identity);
+                        Rigidbody2D airballRb = spawnedAirBall.GetComponent<Rigidbody2D>();
+                        airballRb.mass = 100000;
+                        airballRb.gravityScale = 0;
+                        airballRb.AddForce(transform.up * airballRb.mass * 1000);
+                        anim.Play("windIdle");
+                        airCooldownTimer = airCooldown;
+                    }
                     break;
                 case "Water":
-                    GameObject spawnedWaterBall = Instantiate(waterBall, transform.position, Quaternion.identity);
-                    Rigidbody2D waterBallRb = spawnedWaterBall.GetComponent<Rigidbody2D>();
-                    waterBallRb.AddForce(transform.up * waterBallRb.mass * 1000);
+                    if(waterCooldownTimer < 0)
+                    {
+                        GameObject spawnedWaterBall = Instantiate(waterBall, transform.position, Quaternion.identity);
+                        Rigidbody2D waterBallRb = spawnedWaterBall.GetComponent<Rigidbody2D>();
+                        waterBallRb.AddForce(transform.up * waterBallRb.mass * 1000);
+                        anim.Play("waterIdle");
+                        waterCooldownTimer = waterCooldown;
+                    }
                     break;
             }
         }
