@@ -79,7 +79,7 @@ public class PlayerElementController : MonoBehaviour
                     {
                         GameObject spawnedWaterBall = Instantiate(waterBall, transform.position, Quaternion.identity);
                         Rigidbody2D waterBallRb = spawnedWaterBall.GetComponent<Rigidbody2D>();
-                        waterBallRb.AddForce(transform.up * waterBallRb.mass * 1000);
+                        waterBallRb.AddForce(transform.up * waterBallRb.mass * 500);
                         anim.Play("waterIdle");
                         waterCooldownTimer = waterCooldown;
                     }
