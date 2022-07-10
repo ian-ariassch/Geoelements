@@ -37,12 +37,12 @@ public class BlockBehavior : MonoBehaviour
         {
             if(healing)
             {
-                other.gameObject.GetComponent<PlayerElementController>().Heal();
+                other.gameObject.GetComponentInChildren<PlayerElementController>().Heal();
                 Destroy(gameObject);
             }
             else
             {
-                other.gameObject.GetComponent<PlayerElementController>().TakeDamage();
+                other.gameObject.GetComponentInChildren<PlayerElementController>().TakeDamage();
             }
         }
     }
