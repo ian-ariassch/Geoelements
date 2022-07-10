@@ -35,6 +35,7 @@ public class PlayerElementController : MonoBehaviour
     {
         currentTime -= Time.deltaTime;
         airCooldownTimer -= Time.deltaTime;
+        waterCooldownTimer -= Time.deltaTime;
         if(currentTime < 0) 
         {
             currentElement = PickRandomElement();
