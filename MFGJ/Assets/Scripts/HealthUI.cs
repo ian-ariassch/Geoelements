@@ -13,6 +13,7 @@ public class HealthUI : MonoBehaviour
     {
         GetPlayerController();
         gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        StartCoroutine("WaveAnimation");
     }
 
     // Update is called once per frame
@@ -36,5 +37,16 @@ public class HealthUI : MonoBehaviour
     public void GetPlayerController()
     {
         playerElController = GameObject.FindGameObjectWithTag("PlayerElementController").GetComponent<PlayerElementController>();
+    }
+
+    IEnumerator WaveAnimation()
+    {
+        while(true){
+            foreach(Image heart in hearts)
+            {
+                heart.gameObject.GetComponent<Animator>().Play("Jump");
+                yield return new WaitForSeconds(1f);
+            }
+        }
     }
 }
