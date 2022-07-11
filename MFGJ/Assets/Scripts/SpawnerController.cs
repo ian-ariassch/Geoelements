@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpawnerController : MonoBehaviour
 {
+    public GameController gc;
     public List<GameObject> spawners;
     public GameObject blockSpawner;
     public int blockCounter = 1;
@@ -17,17 +18,49 @@ public class SpawnerController : MonoBehaviour
 
     float lastSpawnerPosition;
     float lastX = 0;
+    
+    float startingGravity, startingSpawnInterval;
     // Start is called before the first frame update
     void Start()
     {
-        GameObject tempSpawner = Instantiate(blockSpawner, transform.position, Quaternion.identity, this.transform);
-        tempSpawner.GetComponent<BlockSpawner>().gravity = generalGravity;
-        tempSpawner.GetComponent<BlockSpawner>().spawnInterval = spawnInterval;
-        spawners.Add(tempSpawner);
+        gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        InitValues();
     }
 
     // Update is called once per frame
     void Update()
+    {
+        MoveSpawners();
+        if ((blockCounter%10 == 0) && spawners.Count < maxSpawns && canSpawnNew)
+        {
+            SpawnNewSpawner();
+        }
+    }
+
+    bool CheckIfTooCloseToLast(float x)
+    {
+        return Mathf.Abs(x - lastX) < 5f;
+    }
+
+    void MoveToPosition(GameObject spawner, float newX) 
+    {
+        spawner.transform.position = new Vector2(newX, transform.position.y);
+    }
+
+    void SpawnNewSpawner()
+    {
+        GameObject tempSpawner = Instantiate(blockSpawner, transform.position, Quaternion.identity, this.transform);
+        canSpawnNew = false;
+        spawners.Add(tempSpawner);
+        tempSpawner.GetComponent<BlockSpawner>().gravity = generalGravity;
+        tempSpawner.GetComponent<BlockSpawner>().spawnInterval = spawnInterval;
+        foreach (GameObject spawner in spawners) 
+        {
+            spawner.GetComponent<BlockSpawner>().currentTime = spawner.GetComponent<BlockSpawner>().spawnInterval;
+        }
+    }
+
+    void MoveSpawners()
     {
         foreach(GameObject spawner in spawners)
         {
@@ -46,27 +79,29 @@ public class SpawnerController : MonoBehaviour
                 lastX = newX;
             }
         }
-        if ((blockCounter%10 == 0) && spawners.Count < maxSpawns && canSpawnNew)
+    }
+
+    void InitValues()
+    {
+        GameObject tempSpawner = Instantiate(blockSpawner, transform.position, Quaternion.identity, this.transform);
+        tempSpawner.GetComponent<BlockSpawner>().gravity = generalGravity;
+        tempSpawner.GetComponent<BlockSpawner>().spawnInterval = spawnInterval;
+        spawners.Add(tempSpawner);
+        startingGravity = generalGravity;
+        startingSpawnInterval = spawnInterval;
+
+    }
+    public void RestartValues()
+    {
+        blockCounter = 1;
+        canSpawnNew = false;
+        foreach (GameObject spawner in spawners)
         {
-            GameObject tempSpawner = Instantiate(blockSpawner, transform.position, Quaternion.identity, this.transform);
-            canSpawnNew = false;
-            spawners.Add(tempSpawner);
-            tempSpawner.GetComponent<BlockSpawner>().gravity = generalGravity;
-            tempSpawner.GetComponent<BlockSpawner>().spawnInterval = spawnInterval;
-            foreach (GameObject spawner in spawners) 
-            {
-                spawner.GetComponent<BlockSpawner>().currentTime = spawner.GetComponent<BlockSpawner>().spawnInterval;
-            }
+            Destroy(spawner);
         }
-    }
-
-    bool CheckIfTooCloseToLast(float x)
-    {
-        return Mathf.Abs(x - lastX) < 5f;
-    }
-
-    void MoveToPosition(GameObject spawner, float newX) 
-    {
-        spawner.transform.position = new Vector2(newX, transform.position.y);
+        spawners.Clear();
+        generalGravity = startingGravity;
+        spawnInterval = startingSpawnInterval;
+        InitValues();
     }
 }

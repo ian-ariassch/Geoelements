@@ -1,30 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthUI : MonoBehaviour
 {
-    public List<GameObject> hearts;
+    public GameController gc;
+    public List<Image> hearts;
     public PlayerElementController playerElController;
     // Start is called before the first frame update
     void Start()
     {
-
+        GetPlayerController();
+        gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(!gc.paused){
         for(int i = 0; i < hearts.Count; i++)
         {
             if(i+1 <= playerElController.healthPoints)
             {
-                hearts[i].SetActive(true);
+                hearts[i].enabled = true;
             }
             else
             {
-                hearts[i].SetActive(false);
+                hearts[i].enabled = false;
             }
         }
+        }
+    }
+
+    public void GetPlayerController()
+    {
+        playerElController = GameObject.FindGameObjectWithTag("PlayerElementController").GetComponent<PlayerElementController>();
     }
 }

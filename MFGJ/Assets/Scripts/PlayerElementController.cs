@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class PlayerElementController : MonoBehaviour
 {
+    public GameController gc;
     public float elementSwitchInterval = 5f;
     public GameObject airBall, waterBall;
     public int healthPoints, maxHealthPoints;
     public List<AnimationClip> animations;
     public float airCooldown = 5f;
+
+    public float invulnerabilityTime = 1f;
     float airCooldownTimer;
 
     public float waterCooldown = 5f;
     float waterCooldownTimer;
+
+    float invulnerabilityTimer = 0;
 
     int earthShield = 2;
     float currentTime;
@@ -27,6 +32,7 @@ public class PlayerElementController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         playerSprite = GetComponent<SpriteRenderer>();
+        gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         currentTime = 0;
     }
 
@@ -36,6 +42,7 @@ public class PlayerElementController : MonoBehaviour
         currentTime -= Time.deltaTime;
         airCooldownTimer -= Time.deltaTime;
         waterCooldownTimer -= Time.deltaTime;
+        invulnerabilityTimer -= Time.deltaTime;
         if(currentTime < 0) 
         {
             currentElement = PickRandomElement();
@@ -87,9 +94,16 @@ public class PlayerElementController : MonoBehaviour
             }
         }
 
+        if(invulnerabilityTimer < 0)
+        {
+            Color tempColor = playerSprite.color;
+            tempColor.a = 1;
+            playerSprite.color = tempColor;
+        }
+
         if(healthPoints <= 0)
         {
-            Destroy(gameObject);
+            Death();
         }
     }
 
@@ -101,26 +115,33 @@ public class PlayerElementController : MonoBehaviour
 
     public void TakeDamage()
     {
-        if(currentElement == "Earth")
+        if(invulnerabilityTimer < 0)
         {
-            if(earthShield == 1)
+            if(currentElement == "Earth")
             {
-                anim.Play("earthIdle");
-                earthShield--;
-            }
-            else if(earthShield == 2)
-            {
-                anim.Play("earthBroken");
-                earthShield--;
+                if(earthShield == 1)
+                {
+                    anim.Play("earthIdle");
+                    earthShield--;
+                }
+                else if(earthShield == 2)
+                {
+                    anim.Play("earthBroken");
+                    earthShield--;
+                }
+                else
+                {
+                    healthPoints--;
+                }
             }
             else
             {
                 healthPoints--;
             }
-        }
-        else
-        {
-            healthPoints--;
+            Color tempColor = playerSprite.color;
+            tempColor.a = 0.5f;
+            playerSprite.color = tempColor; 
+            invulnerabilityTimer = invulnerabilityTime;
         }
     }
 
@@ -128,5 +149,11 @@ public class PlayerElementController : MonoBehaviour
     {
         if(healthPoints < maxHealthPoints)
         healthPoints++;
+    }
+
+    void Death()
+    {
+        Destroy(gameObject.transform.root.gameObject);
+        gc.StartCoroutine("GameOver");
     }
 }

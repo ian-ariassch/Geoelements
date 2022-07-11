@@ -18,7 +18,10 @@ public class BlockBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
+        if(transform.position.y < -5f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)

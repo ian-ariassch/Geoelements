@@ -10,13 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5180830906738078371}
   - component: {fileID: 5180830906738078370}
-  - component: {fileID: 5180830906738078364}
   - component: {fileID: 5180830906738078367}
   - component: {fileID: 5180830906738078360}
   - component: {fileID: 5180830906738078361}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Player
+  m_TagString: PlayerElementController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88,20 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5180830906738078364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5180830906738078369}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 691b2d0454db3644988e517fbe1c0935, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  speed: 10
 --- !u!114 &5180830906738078367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f1f2eb663f5aef43989b282a897fee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gc: {fileID: 0}
   elementSwitchInterval: 5
   airBall: {fileID: 5754228235694194990, guid: 42e074241d06dc54f9f8b1b3b909a52f, type: 3}
   waterBall: {fileID: 2140799119288782969, guid: d6e0b5bc8adf18548bb9c439e3a460e5, type: 3}
@@ -255,7 +241,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5180830908033760503}
   - component: {fileID: 5180830908033760496}
-  - component: {fileID: 5180830908033760497}
   m_Layer: 7
   m_Name: PlayerParent
   m_TagString: Untagged
@@ -299,17 +284,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5180830908033760497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5180830908033760502}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 691b2d0454db3644988e517fbe1c0935, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  speed: 10
