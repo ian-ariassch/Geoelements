@@ -35,14 +35,14 @@ public class BlockSpawner : MonoBehaviour
             spawnerController.blockCounter++;
             spawnerController.canSpawnNew = true;
 
-            if (gravity < 3f)
+            if (gravity < 4f)
             {
-                gravity += 0.1f;
+                gravity += 0.0125f;
             }
 
-            if (spawnInterval > 0.5f) 
+            if (spawnInterval > 0.325f) 
             {
-                spawnInterval -= 0.1f;
+                spawnInterval -= 0.0125f;
             }
             currentTime = spawnInterval;
             gotMoved = false;
