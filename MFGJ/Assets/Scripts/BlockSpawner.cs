@@ -13,6 +13,10 @@ public class BlockSpawner : MonoBehaviour
     public float currentTime;
     public bool gotMoved;
 
+    public float maxGravity = 4f, minSpawnInterval = 0.325f;
+    public float gravityIncreasePerBlock = 0.0125f;
+    public float spawnIntervalDecreasePerBlock = 0.0125f;
+
     private SpawnerController spawnerController;
 
     void Start()
@@ -35,14 +39,14 @@ public class BlockSpawner : MonoBehaviour
             spawnerController.blockCounter++;
             spawnerController.canSpawnNew = true;
 
-            if (gravity < 4f)
+            if (gravity < maxGravity)
             {
-                gravity += 0.0125f;
+                gravity += gravityIncreasePerBlock;
             }
 
-            if (spawnInterval > 0.325f) 
+            if (spawnInterval > minSpawnInterval) 
             {
-                spawnInterval -= 0.0125f;
+                spawnInterval -= spawnIntervalDecreasePerBlock;
             }
             currentTime = spawnInterval;
             gotMoved = false;

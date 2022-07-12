@@ -12,6 +12,10 @@ public class SpawnerController : MonoBehaviour
     public float spawnInterval;
     public float generalGravity;
 
+    public float maxGravity = 4f, minSpawnInterval = 0.325f;
+    public float gravityIncreasePerBlock = 0.0125f;
+    public float spawnIntervalDecreasePerBlock = 0.0125f;
+
     public bool canSpawnNew = false;
 
     public float minRange = -8, maxRange = 8;
@@ -54,6 +58,10 @@ public class SpawnerController : MonoBehaviour
         spawners.Add(tempSpawner);
         tempSpawner.GetComponent<BlockSpawner>().gravity = generalGravity;
         tempSpawner.GetComponent<BlockSpawner>().spawnInterval = spawnInterval;
+        tempSpawner.GetComponent<BlockSpawner>().maxGravity = maxGravity;
+        tempSpawner.GetComponent<BlockSpawner>().minSpawnInterval = minSpawnInterval;
+        tempSpawner.GetComponent<BlockSpawner>().gravityIncreasePerBlock = gravityIncreasePerBlock;
+        tempSpawner.GetComponent<BlockSpawner>().spawnIntervalDecreasePerBlock = spawnIntervalDecreasePerBlock;
         foreach (GameObject spawner in spawners) 
         {
             spawner.GetComponent<BlockSpawner>().currentTime = spawner.GetComponent<BlockSpawner>().spawnInterval;
@@ -86,6 +94,10 @@ public class SpawnerController : MonoBehaviour
         GameObject tempSpawner = Instantiate(blockSpawner, transform.position, Quaternion.identity, this.transform);
         tempSpawner.GetComponent<BlockSpawner>().gravity = generalGravity;
         tempSpawner.GetComponent<BlockSpawner>().spawnInterval = spawnInterval;
+        tempSpawner.GetComponent<BlockSpawner>().maxGravity = maxGravity;
+        tempSpawner.GetComponent<BlockSpawner>().minSpawnInterval = minSpawnInterval;
+        tempSpawner.GetComponent<BlockSpawner>().gravityIncreasePerBlock = gravityIncreasePerBlock;
+        tempSpawner.GetComponent<BlockSpawner>().spawnIntervalDecreasePerBlock = spawnIntervalDecreasePerBlock;
         spawners.Add(tempSpawner);
         startingGravity = generalGravity;
         startingSpawnInterval = spawnInterval;
