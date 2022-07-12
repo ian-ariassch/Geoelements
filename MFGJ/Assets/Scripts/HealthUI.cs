@@ -7,6 +7,7 @@ public class HealthUI : MonoBehaviour
 {
     public GameController gc;
     public List<Image> hearts;
+    public List<Image> Outlines;
     public PlayerElementController playerElController;
     // Start is called before the first frame update
     void Start()
@@ -28,7 +29,7 @@ public class HealthUI : MonoBehaviour
             }
             else
             {
-                hearts[i].enabled = false;
+                hearts[i].enabled= false;
             }
         }
         }
