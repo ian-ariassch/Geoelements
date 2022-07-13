@@ -31,7 +31,7 @@ public class PlayerElementController : MonoBehaviour
 
     int earthShield = 2;
     float currentTime;
-    string[] elements = new string[3] { "Earth", "Earth", "Earth" };
+    string[] elements = new string[3] { "Air", "Water", "Earth" };
     string currentElement;
 
     AudioSource audioSource;
