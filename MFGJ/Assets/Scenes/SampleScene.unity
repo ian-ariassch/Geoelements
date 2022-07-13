@@ -1639,7 +1639,11 @@ PrefabInstance:
       objectReference: {fileID: 519420031}
     - target: {fileID: 5180830906738078367, guid: f305b4cdb375eb04e827c8c17a478b29, type: 3}
       propertyPath: shakePower
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5180830906738078367, guid: f305b4cdb375eb04e827c8c17a478b29, type: 3}
+      propertyPath: healthPoints
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5180830906738078367, guid: f305b4cdb375eb04e827c8c17a478b29, type: 3}
       propertyPath: audioNames.Array.size

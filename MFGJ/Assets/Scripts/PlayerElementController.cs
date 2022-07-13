@@ -183,13 +183,13 @@ public class PlayerElementController : MonoBehaviour
     {
         Vector3 originalPosition = mainCamera.transform.position;
         Vector3 temp;
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < 30; i++){
             temp = originalPosition;
             temp.x += Random.Range(-0.1f, 0.1f) * shakePower;
             temp.y += Random.Range(-0.1f, 0.1f) * shakePower;
             mainCamera.transform.position = temp;
+            yield return new WaitForSeconds(0.01f);
+            mainCamera.transform.position = originalPosition;
         }
-        yield return new WaitForSeconds(0.1f);
-        mainCamera.transform.position = originalPosition;
     }
 }
