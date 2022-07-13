@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
     public float score;
     public bool paused;
     public GameObject scoreUI;
+    public GameObject highScoreUI;
 
     bool canRestart;
     void Start()
@@ -44,18 +45,34 @@ public class GameController : MonoBehaviour
             Destroy(block);
         }
         sc.RestartValues();
-        Instantiate(player, new Vector3(0, -3.65f, 0), Quaternion.identity);
+        player.transform.position = new Vector3(0, -3.65f, 0);
+        player.GetComponentInChildren<PlayerElementController>().healthPoints = 3;
+        player.SetActive(true);
         healthController.GetPlayerController();
         paused = false;
         score = 0;
         canRestart = false;
+        // scoreUI.SetActive(true);
+        highScoreUI.SetActive(false);
     }
 
     IEnumerator GameOver()
     {
+        updateHighScore();
         gameOverText.SetActive(true);
+        // scoreUI.SetActive(false);
+        highScoreUI.GetComponent<TMP_Text>().text = "High Score\n" + PlayerPrefs.GetFloat("HighScore").ToString("F0");
+        highScoreUI.SetActive(true);
         paused = true;
         yield return new WaitForSeconds(3f);
         canRestart = true;
+    }
+
+    void updateHighScore()
+    {
+        if(score > PlayerPrefs.GetFloat("HighScore"))
+        {
+            PlayerPrefs.SetFloat("HighScore", score);
+        }
     }
 }

@@ -2,27 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct AudioNames
+{
+    public string name;
+    public AudioClip clip;
+}
+
 public class PlayerElementController : MonoBehaviour
 {
+
+    
     public GameController gc;
+    public Camera mainCamera;
+    public AudioNames[] audioNames;
+    public Dictionary<string, AudioClip> audioDictionary = new Dictionary<string, AudioClip>();
     public float elementSwitchInterval = 5f;
     public GameObject airBall, waterBall;
     public int healthPoints, maxHealthPoints;
-    public List<AnimationClip> animations;
-    public float airCooldown = 5f;
-
     public float invulnerabilityTime = 1f;
-    float airCooldownTimer;
-
+    public float airCooldown = 5f;
     public float waterCooldown = 5f;
+    public float shakePower = 10f;
+    float airCooldownTimer;
     float waterCooldownTimer;
 
     float invulnerabilityTimer = 0;
 
     int earthShield = 2;
     float currentTime;
-    string[] elements = new string[3] { "Water", "Air", "Earth" };
+    string[] elements = new string[3] { "Earth", "Earth", "Earth" };
     string currentElement;
+
+    AudioSource audioSource;
 
     Animator anim;
     SpriteRenderer playerSprite;
@@ -32,8 +44,13 @@ public class PlayerElementController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         playerSprite = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
         gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         currentTime = 0;
+        foreach(AudioNames audioName in audioNames)
+        {
+            audioDictionary.Add(audioName.name, audioName.clip);
+        }
     }
 
     // Update is called once per frame
@@ -72,6 +89,7 @@ public class PlayerElementController : MonoBehaviour
                 case "Air":
                     if(airCooldownTimer < 0)
                     {
+                        audioSource.PlayOneShot(audioDictionary["shootAir"]);
                         GameObject spawnedAirBall = Instantiate(airBall, transform.position, Quaternion.identity);
                         Rigidbody2D airballRb = spawnedAirBall.GetComponent<Rigidbody2D>();
                         airballRb.mass = 100000;
@@ -84,6 +102,7 @@ public class PlayerElementController : MonoBehaviour
                 case "Water":
                     if(waterCooldownTimer < 0)
                     {
+                        audioSource.PlayOneShot(audioDictionary["shootWater"]);
                         GameObject spawnedWaterBall = Instantiate(waterBall, transform.position, Quaternion.identity);
                         Rigidbody2D waterBallRb = spawnedWaterBall.GetComponent<Rigidbody2D>();
                         waterBallRb.AddForce(transform.up * waterBallRb.mass * 500);
@@ -117,15 +136,18 @@ public class PlayerElementController : MonoBehaviour
     {
         if(invulnerabilityTimer < 0)
         {
+            StartCoroutine("ScreenShake");
             if(currentElement == "Earth")
             {
                 if(earthShield == 1)
                 {
+                    audioSource.PlayOneShot(audioDictionary["earthSecondHit"]);
                     anim.Play("earthIdle");
                     earthShield--;
                 }
                 else if(earthShield == 2)
                 {
+                    audioSource.PlayOneShot(audioDictionary["earthFirstHit"]);
                     anim.Play("earthBroken");
                     earthShield--;
                 }
@@ -153,7 +175,21 @@ public class PlayerElementController : MonoBehaviour
 
     void Death()
     {
-        Destroy(gameObject.transform.root.gameObject);
+        gameObject.transform.root.gameObject.SetActive(false);
         gc.StartCoroutine("GameOver");
+    }
+
+    IEnumerator ScreenShake()
+    {
+        Vector3 originalPosition = mainCamera.transform.position;
+        Vector3 temp;
+        for(int i = 0; i < 100; i++){
+            temp = originalPosition;
+            temp.x += Random.Range(-0.1f, 0.1f) * shakePower;
+            temp.y += Random.Range(-0.1f, 0.1f) * shakePower;
+            mainCamera.transform.position = temp;
+        }
+        yield return new WaitForSeconds(0.1f);
+        mainCamera.transform.position = originalPosition;
     }
 }

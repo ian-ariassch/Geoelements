@@ -33,6 +33,13 @@ public class HealthUI : MonoBehaviour
             }
         }
         }
+        else
+        {
+            for(int i = 0; i < hearts.Count; i++)
+            {
+                hearts[i].enabled = false;
+            }
+        }
     }
 
     public void GetPlayerController()
