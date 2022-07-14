@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 151731836396133670}
   - component: {fileID: 5111243781660362448}
   - component: {fileID: 8938693436381159922}
+  - component: {fileID: 1521915197811600984}
   m_Layer: 7
   m_Name: WaterBall
   m_TagString: Water
@@ -144,3 +145,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1521915197811600984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140799119288782969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb4c0c0603e7e6748aec95208ad34f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

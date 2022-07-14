@@ -8,10 +8,12 @@ public class GameController : MonoBehaviour
 {
     // Start is called before the first frame update
     public SpawnerController sc;
+    public AudioSource audioSource;
     public HealthUI healthController;
     public GameObject player;
     public List<GameObject> blocks;
     public GameObject gameOverText;
+    public GameObject restartText;
     public float score;
     public bool paused;
     public GameObject scoreUI;
@@ -33,7 +35,6 @@ public class GameController : MonoBehaviour
         scoreUI.GetComponent<TMP_Text>().text = "Score: " + score.ToString("F0");
         if(Input.anyKeyDown && canRestart)
         {
-            gameOverText.SetActive(false);
             restartGame();
         }
     }
@@ -53,11 +54,14 @@ public class GameController : MonoBehaviour
         score = 0;
         canRestart = false;
         // scoreUI.SetActive(true);
+        gameOverText.SetActive(false);
         highScoreUI.SetActive(false);
+        restartText.SetActive(false);
     }
 
     IEnumerator GameOver()
     {
+        audioSource.PlayOneShot(audioSource.clip);
         updateHighScore();
         gameOverText.SetActive(true);
         // scoreUI.SetActive(false);
@@ -65,6 +69,7 @@ public class GameController : MonoBehaviour
         highScoreUI.SetActive(true);
         paused = true;
         yield return new WaitForSeconds(3f);
+        restartText.SetActive(true);
         canRestart = true;
     }
 
