@@ -153,11 +153,13 @@ public class PlayerElementController : MonoBehaviour
                 }
                 else
                 {
+                    audioSource.PlayOneShot(audioDictionary["ballImpact"]);
                     healthPoints--;
                 }
             }
             else
             {
+                audioSource.PlayOneShot(audioDictionary["ballImpact"]);
                 healthPoints--;
             }
             Color tempColor = playerSprite.color;
