@@ -84,33 +84,7 @@ public class PlayerElementController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            switch (currentElement) 
-            {
-                case "Air":
-                    if(airCooldownTimer < 0)
-                    {
-                        audioSource.PlayOneShot(audioDictionary["shootAir"]);
-                        GameObject spawnedAirBall = Instantiate(airBall, transform.position, Quaternion.identity);
-                        Rigidbody2D airballRb = spawnedAirBall.GetComponent<Rigidbody2D>();
-                        airballRb.mass = 100000;
-                        airballRb.gravityScale = 0;
-                        airballRb.AddForce(transform.up * airballRb.mass * 1000);
-                        anim.Play("windIdle");
-                        airCooldownTimer = airCooldown;
-                    }
-                    break;
-                case "Water":
-                    if(waterCooldownTimer < 0)
-                    {
-                        audioSource.PlayOneShot(audioDictionary["shootWater"]);
-                        GameObject spawnedWaterBall = Instantiate(waterBall, transform.position, Quaternion.identity);
-                        Rigidbody2D waterBallRb = spawnedWaterBall.GetComponent<Rigidbody2D>();
-                        waterBallRb.AddForce(transform.up * waterBallRb.mass * 500);
-                        anim.Play("waterIdle");
-                        waterCooldownTimer = waterCooldown;
-                    }
-                    break;
-            }
+            Shoot();
         }
 
         if(invulnerabilityTimer < 0)
@@ -193,5 +167,36 @@ public class PlayerElementController : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
             mainCamera.transform.position = originalPosition;
         }
+    }
+
+    public void Shoot()
+    {
+            switch (currentElement) 
+            {
+                case "Air":
+                    if(airCooldownTimer < 0)
+                    {
+                        audioSource.PlayOneShot(audioDictionary["shootAir"]);
+                        GameObject spawnedAirBall = Instantiate(airBall, transform.position, Quaternion.identity);
+                        Rigidbody2D airballRb = spawnedAirBall.GetComponent<Rigidbody2D>();
+                        airballRb.mass = 100000;
+                        airballRb.gravityScale = 0;
+                        airballRb.AddForce(transform.up * airballRb.mass * 1000);
+                        anim.Play("windIdle");
+                        airCooldownTimer = airCooldown;
+                    }
+                    break;
+                case "Water":
+                    if(waterCooldownTimer < 0)
+                    {
+                        audioSource.PlayOneShot(audioDictionary["shootWater"]);
+                        GameObject spawnedWaterBall = Instantiate(waterBall, transform.position, Quaternion.identity);
+                        Rigidbody2D waterBallRb = spawnedWaterBall.GetComponent<Rigidbody2D>();
+                        waterBallRb.AddForce(transform.up * waterBallRb.mass * 500);
+                        anim.Play("waterIdle");
+                        waterCooldownTimer = waterCooldown;
+                    }
+                    break;
+            }
     }
 }

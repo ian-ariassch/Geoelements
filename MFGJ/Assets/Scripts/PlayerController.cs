@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,7 +19,18 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        direction = new Vector2(Input.GetAxisRaw("Horizontal"),0);
+        
+        foreach(Touch touch in Input.touches)
+        {
+            if(!IsPointerOverUIObject())
+            {
+                getTouchDirection(touch);
+            }
+        }
+        if(Input.touchCount < 1)
+        {
+            direction = new Vector2(0, 0);
+        }
     }
 
     private void FixedUpdate()
@@ -30,4 +42,24 @@ public class PlayerController : MonoBehaviour
     {
         rb.MovePosition((Vector2)transform.position + direction * speed * Time.deltaTime);
     }
+
+    private void getTouchDirection(Touch touch)
+    {
+        if(touch.position.x < Screen.width/2)
+        {
+            direction = new Vector2(-1, 0);
+        }
+        else
+        {
+            direction = new Vector2(1, 0);
+        }
+    }
+
+    private bool IsPointerOverUIObject() {
+         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+         eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+     List<RaycastResult> results = new List<RaycastResult>();
+     EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+     return results.Count > 0;
+ }
 }
