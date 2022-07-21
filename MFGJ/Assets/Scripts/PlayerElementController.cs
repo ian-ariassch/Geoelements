@@ -30,10 +30,10 @@ public class PlayerElementController : MonoBehaviour
     float invulnerabilityTimer = 0;
 
     int earthShield = 2;
-    float currentTime;
+    public float currentTime;
     string[] elements = new string[3] { "Air", "Water", "Earth" };
     string currentElement;
-
+    public bool paused = false;
     AudioSource audioSource;
 
     Animator anim;
@@ -56,7 +56,10 @@ public class PlayerElementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentTime -= Time.deltaTime;
+        if(!paused)
+        {
+            currentTime -= Time.deltaTime;
+        }
         airCooldownTimer -= Time.deltaTime;
         waterCooldownTimer -= Time.deltaTime;
         invulnerabilityTimer -= Time.deltaTime;
@@ -151,6 +154,7 @@ public class PlayerElementController : MonoBehaviour
 
     void Death()
     {
+        paused = true;
         gameObject.transform.root.gameObject.SetActive(false);
         gc.StartCoroutine("GameOver");
     }
@@ -170,7 +174,8 @@ public class PlayerElementController : MonoBehaviour
     }
 
     public void Shoot()
-    {
+    {   
+        if(!paused)
             switch (currentElement) 
             {
                 case "Air":

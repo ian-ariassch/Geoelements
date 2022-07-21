@@ -20,6 +20,8 @@ public class GameController : MonoBehaviour
     public GameObject scoreUI;
     public GameObject highScoreUI;
 
+    PlayerElementController playerElementController;
+
     bool canRestart, gameStarted;
     void Start()
     {
@@ -27,7 +29,8 @@ public class GameController : MonoBehaviour
         sc.gameObject.SetActive(false);
         howToPlay.SetActive(true);
         gameStarted = false;
-        player.GetComponentInChildren<PlayerElementController>().healthPoints = 3;
+        playerElementController = player.GetComponentInChildren<PlayerElementController>();
+        playerElementController.healthPoints = 3;
     }
 
     // Update is called once per frame
@@ -59,7 +62,9 @@ public class GameController : MonoBehaviour
         }
         sc.RestartValues();
         player.transform.position = new Vector3(0, -3.65f, 0);
-        player.GetComponentInChildren<PlayerElementController>().healthPoints = 3;
+        playerElementController.healthPoints = 3;
+        playerElementController.paused = false;
+        playerElementController.currentTime = -1;
         player.SetActive(true);
         healthController.GetPlayerController();
         paused = false;
