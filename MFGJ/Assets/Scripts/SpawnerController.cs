@@ -91,6 +91,9 @@ public class SpawnerController : MonoBehaviour
 
     void InitValues()
     {
+        Vector3 stageDimensions = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height,0));
+        minRange = -stageDimensions.x;
+        maxRange = stageDimensions.x;
         GameObject tempSpawner = Instantiate(blockSpawner, transform.position, Quaternion.identity, this.transform);
         tempSpawner.GetComponent<BlockSpawner>().gravity = generalGravity;
         tempSpawner.GetComponent<BlockSpawner>().spawnInterval = spawnInterval;

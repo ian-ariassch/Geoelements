@@ -14,28 +14,40 @@ public class GameController : MonoBehaviour
     public List<GameObject> blocks;
     public GameObject gameOverText;
     public GameObject restartText;
+    public GameObject howToPlay;
     public float score;
     public bool paused;
     public GameObject scoreUI;
     public GameObject highScoreUI;
 
-    bool canRestart;
+    bool canRestart, gameStarted;
     void Start()
     {
         score = 0;
-        canRestart = false;
+        sc.gameObject.SetActive(false);
+        howToPlay.SetActive(true);
+        gameStarted = false;
+        player.GetComponentInChildren<PlayerElementController>().healthPoints = 3;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!paused){
+        if(!paused && gameStarted){
         score += Time.deltaTime;
         }
         scoreUI.GetComponent<TMP_Text>().text = "Score: " + score.ToString("F0");
-        if(Input.anyKeyDown && canRestart)
+        if(Input.anyKeyDown)
         {
+            if(canRestart)
             restartGame();
+            else if(!gameStarted)
+            {
+                howToPlay.SetActive(false);
+                gameStarted = true;
+                sc.gameObject.SetActive(true);
+                restartGame();
+            }
         }
     }
 
